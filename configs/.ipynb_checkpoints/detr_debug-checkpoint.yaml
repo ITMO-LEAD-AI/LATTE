@@ -1,0 +1,26 @@
+model:
+  name: facebook/detr-resnet-50
+  calibration_processor: PekingU/rtdetr_r50vd
+
+dataset:
+  images: /home/tnn/CVPR_2025/datasets/coco/images/train2017
+  annotations: /home/tnn/CVPR_2025/datasets/coco/annotations/instances_train2017.json
+  num_samples: 32
+
+calibration:
+  collection_batch_size: 4
+  batch_size: 4
+  epochs: 1
+  learning_rate: 0.001
+  chunk_size: 1
+  cosine_weight: 1.0
+  mse_weight: 1.0
+  trainable_parameters: all
+  seed: 42
+  device: cuda
+
+linearization:
+  layers: [0]
+
+output:
+  checkpoint_path: checkpoints/detr_debug.pth

@@ -1,0 +1,10 @@
+# Versions used for the DETR and RT-DETR calibration code.
+torch==2.10.0
+torchvision==0.25.0
+transformers==5.2.0
+timm>=1.0,<2.0
+PyYAML==6.0.3
+numpy==2.2.6
+tqdm==4.67.3
+Pillow==12.1.1
+pycocotools==2.0.11
