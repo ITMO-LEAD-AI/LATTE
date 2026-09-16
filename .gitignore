@@ -10,3 +10,4 @@ calibration_data/
 checkpoints/*.pth
 checkpoints/*.pt
 outputs/
+.ipynb_checkpoints/
