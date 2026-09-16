@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LATTE for DETR and RT-DETR
 
 This repository applies LATTE (Linearized Attention with Tunable Taylor
@@ -236,3 +237,7 @@ proceedings BibTeX entry can be added here when available.
 
 The repository currently contains an MIT license. Confirm the intended license
 with all authors or the owning organization before publication.
+=======
+# LATTE
+# The code will be released soon
+>>>>>>> fa2643b56e1abc8195fa0e22e53f80450d629852
