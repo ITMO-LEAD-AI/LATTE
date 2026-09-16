@@ -1,12 +1,28 @@
-<<<<<<< HEAD
-# LATTE for DETR and RT-DETR
+# LATTE: Plug-and-Play Attention Linearization for Pretrained Transformers
+
+**ECCV 2026**
+
+Kenan Kassab · Alexey Kashevnik · Ammar Ali · Stamatios Lefkimmiatis
+
+Official implementation of **Plug-and-Play Attention Linearization for
+Pretrained Transformers**. LATTE replaces selected softmax attention blocks
+with calibrated linear attention, using a small unlabeled dataset without
+full model retraining.
+
+<p align="center">
+  <img src="figs/latte_method.png" alt="LATTE overview: selective attention replacement, tunable Taylor expansion, joint post-squaring normalization, and calibration." width="100%">
+</p>
+
+LATTE combines **Tunable Taylor Series Expansion (TTE)**,
+**Joint Post-Squaring Normalization (JPN)**, and **sensitivity-guided layer
+selection** to construct a hybrid Transformer.
 
 This repository applies LATTE (Linearized Attention with Tunable Taylor
 Expansion) to the decoder self-attention layers of pretrained DETR and
 RT-DETR. Each linear layer is initialized from the original projections and
 calibrated on a small COCO subset without full model retraining.
 
-## Installation
+## 🚀 Installation
 
 The reference environment uses Python 3.10.19, PyTorch 2.10.0, TorchVision
 0.25.0, and Transformers 5.2.0.
@@ -24,7 +40,7 @@ To use an existing compatible environment:
 pip install -e .
 ```
 
-## Dataset paths
+## 🔧 Dataset paths
 
 The calibration and evaluation commands expect a local COCO 2017 structure:
 
@@ -87,29 +103,8 @@ Then run the full DETR calibration:
 run_latte_detr --config configs/detr_calibration.yaml
 ```
 
-The DETR pipeline uses `facebook/detr-resnet-50` and has its own attention,
-calibration and evaluation implementation, following the supplied original
-DETR script. RT-DETR implementation files are unchanged from the working
-RT-DETR-only release.
 
-DETR deliberately uses `RTDetrImageProcessor("PekingU/rtdetr_r50vd")` for
-calibration and `DetrImageProcessor("facebook/detr-resnet-50")` for evaluation,
-as in the original script. Calibration uses decoder hidden states, omits
-positional embeddings in the local optimization, and stores the training-average
-cosine loss plus the final shuffled-pass MSE. Its attention preserves the original
-direct head-output reshape and `ones_scale1` parameter name.
-
-DETR checkpoints from the earlier combined repo are not equivalent and are
-rejected. Recalibrate, or set `checkpoint:` in the evaluation YAML to your
-original `DETR_LATTE_Repo.pth`; that original checkpoint format is supported.
-Existing RT-DETR checkpoints remain supported.
-
-This release does not silently skip unknown predicted labels. The earlier
-`KeyError: 91` explanation was not established: the original code uses the same
-strict label lookup. If it recurs, compare the original script and this release
-on the same image and original checkpoint before changing postprocessing.
-
-## Evaluation
+## 📊 Evaluation
 
 RT-DETR:
 
@@ -186,39 +181,6 @@ Inspect the saved calibration losses:
 python examples/inspect_checkpoint.py checkpoints/rtdetr_r50vd_latte.pth
 ```
 
-## Repository structure
-
-```text
-LATTE/
-├── latte/
-│   ├── attention.py        # Unchanged RT-DETR LATTE attention
-│   ├── detr_attention.py   # Original DETR attention
-│   ├── detr_calibration.py # Original DETR optimizer and loss semantics
-│   ├── calibration.py      # Activation capture and optimization
-│   ├── detr_utils.py       # DETR layer creation and replacement
-│   ├── rtdetr_utils.py     # Layer creation, selection, and replacement
-│   ├── detr_pipeline.py    # DETR calibration command
-│   ├── rtdetr_pipeline.py  # Calibration command
-│   ├── detr_evaluator.py   # DETR COCO evaluation
-│   └── rtdetr_evaluator.py # RT-DETR COCO evaluation
-├── configs/
-│   ├── detr_debug.yaml
-│   ├── detr_calibration.yaml
-│   ├── detr_evaluation.yaml
-│   ├── rtdetr_debug.yaml
-│   ├── rtdetr_calibration.yaml
-│   └── rtdetr_evaluation.yaml
-├── examples/
-│   ├── linearize_rtdetr.py
-│   ├── linearize_detr.py
-│   └── inspect_checkpoint.py
-├── checkpoints/
-├── tests/
-├── environment.yml
-├── requirements.txt
-└── setup.py
-```
-
 ## Testing
 
 ```bash
@@ -230,14 +192,18 @@ The unit tests do not download DETR, RT-DETR, or COCO.
 
 ## Citation
 
-If you use this repository, please cite the LATTE ECCV 2026 paper. The final
-proceedings BibTeX entry can be added here when available.
+If you use LATTE in your research, please cite our paper:
+
+```bibtex
+@inproceedings{kassab2026latte,
+  title     = {Plug-and-Play Attention Linearization for Pretrained Transformers},
+  author    = {Kassab, Kenan and Kashevnik, Alexey and Ali, Ammar and Lefkimmiatis, Stamatios},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}
+```
 
 ## License
 
-The repository currently contains an MIT license. Confirm the intended license
-with all authors or the owning organization before publication.
-=======
-# LATTE
-# The code will be released soon
->>>>>>> fa2643b56e1abc8195fa0e22e53f80450d629852
+This project is licensed under the [MIT License](LICENSE).
+
