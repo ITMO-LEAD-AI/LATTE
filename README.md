@@ -1,4 +1,4 @@
-#**[ECCV 2026] LATTE**: Plug-and-Play Attention Linearization for Pretrained Transformers
+# **[ECCV 2026] LATTE**: Plug-and-Play Attention Linearization for Pretrained Transformers
 
 Kenan Kassab · Alexey Kashevnik · Ammar Ali · Stamatios Lefkimmiatis
 
